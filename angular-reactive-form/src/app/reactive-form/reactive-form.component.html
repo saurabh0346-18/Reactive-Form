@@ -1,0 +1,210 @@
+<div class="max-w-md mx-auto mt-10">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6 bg-white p-6 shadow-md rounded">
+    <!-- Name Field -->
+    <div>
+      <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+      />
+      <p *ngIf="form.get('name')?.invalid && form.get('name')?.touched" class="text-red-500 text-sm">
+        {{ getErrorMessage('name') }}
+      </p>
+    </div>
+
+    <!-- Email Field -->
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+      />
+      <p *ngIf="form.get('email')?.invalid && form.get('email')?.touched" class="text-red-500 text-sm">
+        {{ getErrorMessage('email') }}
+      </p>
+    </div>
+
+    <!-- Password Fields -->
+    <div>
+      <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+      />
+      <p *ngIf="form.get('password')?.invalid && form.get('password')?.touched" class="text-red-500 text-sm">
+        {{ getErrorMessage('password') }}
+      </p>
+    </div>
+    <div>
+      <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+      <input
+        id="confirmPassword"
+        type="password"
+        formControlName="confirmPassword"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+      />
+      <p *ngIf="form.hasError('passwordsMismatch') && form.get('confirmPassword')?.touched" class="text-red-500 text-sm">
+        {{ getGroupError() }}
+      </p>
+    </div>
+
+    <!-- Phone Field -->
+    <div>
+      <label for="phone" class="block text-sm font-medium text-gray-700">Phone</label>
+      <input
+        id="phone"
+        type="text"
+        formControlName="phone"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+      />
+      <p *ngIf="form.get('phone')?.invalid && form.get('phone')?.touched" class="text-red-500 text-sm">
+        {{ getErrorMessage('phone') }}
+      </p>
+    </div>
+
+    <!-- Role Field -->
+    <div>
+      <label for="role" class="block text-sm font-medium text-gray-700">Role</label>
+      <select
+        id="role"
+        formControlName="role"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+      >
+        <option value="" disabled>Select a role</option>
+        <option value="admin">Admin</option>
+        <option value="user">User</option>
+        <option value="guest">Guest</option>
+      </select>
+      <p *ngIf="form.get('role')?.invalid && form.get('role')?.touched" class="text-red-500 text-sm">
+        {{ getErrorMessage('role') }}
+      </p>
+    </div>
+
+    <!-- Address Section -->
+    <div formGroupName="address" class="space-y-4">
+      <h3 class="text-lg font-medium text-gray-900">Address</h3>
+      <div>
+        <label for="street" class="block text-sm font-medium text-gray-700">Street</label>
+        <input
+          id="street"
+          type="text"
+          formControlName="street"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+      </div>
+      <div>
+        <label for="city" class="block text-sm font-medium text-gray-700">City</label>
+        <input
+          id="city"
+          type="text"
+          formControlName="city"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+      </div>
+      <div>
+        <label for="state" class="block text-sm font-medium text-gray-700">State</label>
+        <input
+          id="state"
+          type="text"
+          formControlName="state"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+      </div>
+      <div>
+        <label for="zip" class="block text-sm font-medium text-gray-700">ZIP Code</label>
+        <input
+          id="zip"
+          type="text"
+          formControlName="zip"
+          class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+        />
+      </div>
+    </div>
+
+    <!-- Skills Section -->
+    <div formArrayName="skills" class="space-y-4">
+      <h3 class="text-lg font-medium text-gray-900">Skills</h3>
+      <div *ngFor="let skill of skills.controls; let i = index" [formGroupName]="i" class="border p-4 rounded-md">
+        <div>
+          <label for="skillName-{{ i }}" class="block text-sm font-medium text-gray-700">Skill Name</label>
+          <input
+            id="skillName-{{ i }}"
+            type="text"
+            formControlName="skillName"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+        <div>
+          <label for="experience-{{ i }}" class="block text-sm font-medium text-gray-700">Experience (Years)</label>
+          <input
+            id="experience-{{ i }}"
+            type="text"
+            formControlName="experience"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+        <button type="button" (click)="removeSkill(i)" class="mt-2 bg-red-500 text-white py-1 px-3 rounded-md">
+          Remove Skill
+        </button>
+      </div>
+      <button type="button" (click)="addSkill()" class="mt-4 bg-green-500 text-white py-2 px-4 rounded-md">
+        Add Skill
+      </button>
+    </div>
+
+    <!-- Projects Section -->
+    <div formArrayName="projects" class="space-y-4">
+      <h3 class="text-lg font-medium text-gray-900">Projects</h3>
+      <div *ngFor="let project of projects.controls; let i = index" [formGroupName]="i" class="border p-4 rounded-md">
+        <div>
+          <label for="projectName-{{ i }}" class="block text-sm font-medium text-gray-700">Project Name</label>
+          <input
+            id="projectName-{{ i }}"
+            type="text"
+            formControlName="projectName"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+        <div>
+          <label for="description-{{ i }}" class="block text-sm font-medium text-gray-700">Description</label>
+          <textarea
+            id="description-{{ i }}"
+            formControlName="description"
+            rows="3"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          ></textarea>
+        </div>
+        <div>
+          <label for="duration-{{ i }}" class="block text-sm font-medium text-gray-700">Duration (Months)</label>
+          <input
+            id="duration-{{ i }}"
+            type="text"
+            formControlName="duration"
+            class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+        </div>
+        <button type="button" (click)="removeProject(i)" class="mt-2 bg-red-500 text-white py-1 px-3 rounded-md">
+          Remove Project
+        </button>
+      </div>
+      <button type="button" (click)="addProject()" class="mt-4 bg-green-500 text-white py-2 px-4 rounded-md">
+        Add Project
+      </button>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      [disabled]="form.invalid"
+      class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow hover:bg-indigo-700"
+    >
+      Submit
+    </button>
+  </form>
+</div>
